@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:image_edit/screens/edit_image_sceen.dart';
+import 'package:image_edit/utils/page_transitioin.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,13 +11,33 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: IconButton(
-          onPressed: () {},
-          icon: Icon(
+          onPressed: () async {
+            XFile? file = await ImagePicker().pickImage(
+              source: ImageSource.gallery,
+            );
+            // ImagePicker().pickImage(source: ImageSource.camera);
+            if (file != null) {
+              // context.push(
+              //   EditImageScreen(
+              //     selectedImage: file.path,
+              //   ),
+              // );
+              Navigator.of(context).push(
+                MyCustomRouteTransition(
+                  widget: EditImageScreen(
+                    selectedImage: file.path,
+                  ),
+                ),
+              );
+            }
+          },
+          icon: const Icon(
             Icons.upload_file,
-            size: 50,
+            size: 75,
           ),
         ),
       ),
+      
     );
   }
 }
